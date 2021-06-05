@@ -1,0 +1,52 @@
+### BUILD VARIABLES
+# For common Spring configs, see: https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+databasename: customer-card-data
+server:
+  port: 8092
+spring:
+  main:
+    # Mode used to display the banner when the application runs. Can be CONSOLE, LOG or OFF.
+    # See: https://docs.spring.io/spring-boot/docs/current/api/org/springframework/boot/Banner.Mode.html
+    banner-mode: CONSOLE
+  banner:
+    # Banner text resource location, below file is provided.
+    location: banner.txt
+  jackson:
+    # Controls the inclusion of properties during serialization.
+    default-property-inclusion: non_null
+  application:
+    # Application name
+    name: CardDetails
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+    platform: h2
+    jpa:
+      database-platform: org.hibernate.dialect.H2Dialect
+    h2:
+      console:
+        enabled: true
+        path: /h2
+logging:
+  config: classpath:log4j2-logtofile.json
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      group:
+        liveness:
+          include: diskSpace,ping
+          show-details: always
+  metrics:
+    distribution:
+      percentiles[http.server.requests]: 0.90,0.95,0.99
+  info:
+    git:
+      mode: full
