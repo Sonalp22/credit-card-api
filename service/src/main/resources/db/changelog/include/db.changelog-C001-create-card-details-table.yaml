@@ -1,0 +1,38 @@
+databaseChangeLog: 
+  - logicalFilePath: "db.changelog-C001-create-card-details-table.yaml"
+  - changeSet:
+      id: 001
+      author: sonal
+      changes:
+          -  createTable:
+                 catalogName:  cc
+                 columns:
+                   - column:
+                       name: ID
+                       type: uniqueidentifier
+                       constraints:
+                         primaryKey: true
+                         nullable: false
+                   - column:
+                        name: CUSTOMER_NAME
+                        type: varchar(100)
+                        constraints:
+                          nullable: false
+                   - column:
+                       name: CARD_NUMBER
+                       type: varchar(19)
+                       constraints:
+                         nullable: false
+                   - column:
+                       name: CARD_LIMIT
+                       type: varchar(20)
+                       constraints:
+                         nullable: false
+                   - column:
+                       name: CREATED_DATE_TIME
+                       type: datetime
+                   - column:
+                       name: UPDATED_DATE_TIME
+                       type: datetime
+                 remarks:  Credit Card Details
+                 tableName:  CREDIT_CARD_DETAILS
