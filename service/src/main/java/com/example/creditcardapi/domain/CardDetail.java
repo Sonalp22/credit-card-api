@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class CardDetail {
 
     @Id
-    @GenericGenerator(name = "generator", strategy = "guid")
+    @GenericGenerator(name = "generator", strategy = "uuid")
     @GeneratedValue(generator = "generator")
     @Column(name = "ID",columnDefinition = "uniqueidentifier")
     private String id;
@@ -33,6 +33,9 @@ public class CardDetail {
 
     @Column(name = "CARD_LIMIT")
     private String cardLimit;
+
+    @Column(name = "CARD_BALANCE")
+    private String cardBalance;
 
     @Column(name = "CREATED_DATE_TIME")
     private LocalDateTime createdDateTime;

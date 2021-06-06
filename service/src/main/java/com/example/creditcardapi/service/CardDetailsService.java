@@ -7,5 +7,5 @@ import com.example.creditcardapi.model.CardDetailsWithPagination;
 public interface CardDetailsService {
     CardDetailsWithPagination getCardDetails(String page, Integer limit);
 
-    String addCardDetails(CardDetail chargeRequestData);
+    void addCardDetails(CardDetail chargeRequestData);
 }

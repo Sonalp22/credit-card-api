@@ -29,6 +29,11 @@ databaseChangeLog:
                        constraints:
                          nullable: false
                    - column:
+                       name: CARD_BALANCE
+                       type: varchar(20)
+                       constraints:
+                         nullable: false
+                   - column:
                        name: CREATED_DATE_TIME
                        type: datetime
                    - column:
