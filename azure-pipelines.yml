@@ -1,0 +1,41 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  - master
+  - develop
+  - bugfix_*
+  - feature_*
+  - main
+
+resources:
+  repositories:
+    - repository: repository_name
+      type: git
+      name: templates to refer
+      ref: refs/heads/master
+
+variables:
+  - group: azure-variable-grp
+
+stages:
+  - stage: Build
+    displayName: Initialize Project Build
+    jobs:
+      - job:
+        steps:
+          - script: echo build job
+      - ${{ if eq(variables['Build.SourceBranchName'], 'develop') }}:
+          - template: templates/build-jobs/buildjobs_cdt.yaml
+
+  - stage: Deploy
+    dependsOn: Build
+    condition: and(succeeded('Build'), ne(variables['Build.Reason'], 'PullRequest'))
+    jobs:
+      - job:
+        steps:
+          - script: echo deploy job
+      - ${{ if eq(variables['Build.SourceBranchName'], 'develop') }}:
+          - template: templates/deploy-jobs/deployjobs_cdt.yaml

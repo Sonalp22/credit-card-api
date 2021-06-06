@@ -219,7 +219,7 @@ components:
           description: The textual representation of the response status.
           type: string
         timestamp:
-          description: 'The date and time (dd-MM-yyyy hh:mm:ss) the error occured.'
+          description: 'The date and time the error occured.'
           type: string
           example: '2020-08-16T12:39:53.089Z'
         message:
@@ -258,12 +258,12 @@ components:
         customerName:
           type: string
           description: customer name
-          example: '10000007951'
+          example: 'Alpha Tech'
         cardNumber:
           type: string
           description: card number
-          pattern: ^[0-9]{19}$
-          example: '10000007951'
+          pattern: ^[0-9]{16,19}$
+          example: '73648236592389845'
         limit:
           type: number
           description: card limit

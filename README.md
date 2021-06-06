@@ -9,3 +9,6 @@ and also for fetching all the stored card details.
 
 #Technology
 It is build on Spring boot Web microservice and uses Java 11
+
+#OAS
+/service/src/main/resources/spec/oas.yml
