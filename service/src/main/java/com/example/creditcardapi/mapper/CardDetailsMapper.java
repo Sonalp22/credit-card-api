@@ -51,7 +51,7 @@ public class CardDetailsMapper {
                 .customerName(cardDetailData.getCustomerName())
                 .cardNumber(cardDetailData.getCardNumber())
                 .cardLimit(StringUtils.isEmpty(cardDetailData.getLimit())?"£1500": cardDetailData.getLimit())
-                .cardBalance("$0")
+                .cardBalance("£0")
                 .createdDateTime(LocalDateTime.now())
                 .updatedDateTime(LocalDateTime.now())
                 .build();
