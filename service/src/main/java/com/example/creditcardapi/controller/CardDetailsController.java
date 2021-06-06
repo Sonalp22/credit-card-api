@@ -1,5 +1,6 @@
 package com.example.creditcardapi.controller;
 
+import com.example.creditcardapi.model.CardAdditionAcknowledgement;
 import com.example.creditcardapi.model.CardDetail;
 import com.example.creditcardapi.model.CardDetails;
 import com.example.creditcardapi.model.CardDetailsWithPagination;
@@ -21,6 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+/**
+ * Controller class for storeCardDetails ang getCardDetails method
+ */
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -49,15 +53,15 @@ public class CardDetailsController {
         responseHeaders.set("Previous-Page", cardDetailsWithPagination.getPaginationData().getPreviousPage());
         responseHeaders.set("Current-Page", cardDetailsWithPagination.getPaginationData().getCurrentPage());
         responseHeaders.set("Next-Page", cardDetailsWithPagination.getPaginationData().getNextPage());
-        responseHeaders.set("Last-Page", cardDetailsWithPagination.getPaginationData().getLastPage());
+        responseHeaders.set("Total-Records", cardDetailsWithPagination.getPaginationData().getTotalNoOfRecords());
         return ResponseEntity.ok().headers(responseHeaders).body(cardDetailsWithPagination.getCardDetails());
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(path = "/card-detail/add", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void storeCardDetails(@Valid @RequestBody CardDetail chargeRequestData) {
+    public CardAdditionAcknowledgement storeCardDetails(@Valid @RequestBody CardDetail cardDetailData) {
 
         log.info("Inside Controller method addChargeRequest()");
-         service.addCardDetails(chargeRequestData);
+         return service.addCardDetails(cardDetailData);
     }
 }

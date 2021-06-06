@@ -1,12 +1,12 @@
 package com.example.creditcardapi.model;
 
 
+import com.example.creditcardapi.util.Constants;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.validation.Valid;
 
 import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
@@ -25,7 +25,7 @@ public class CardDetail   {
   private String customerName;
 
   @JsonProperty("cardNumber")
-  @Pattern(regexp = "^[0-9]{16,19}$", message = "Card Number must be between 16 to 19 digits only")
+  @Pattern(regexp = "^[0-9]{16,19}$", message = Constants.CARD_NUMBER_VALIDATION_EXCEPTION_MSG)
   private String cardNumber;
 
   @JsonProperty("limit")

@@ -12,6 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
+/**
+ * Domain class for Card Entity
+ */
 @Data
 @Builder
 @AllArgsConstructor

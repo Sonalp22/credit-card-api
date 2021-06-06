@@ -4,11 +4,14 @@ import com.example.creditcardapi.domain.CardDetail;
 import com.example.creditcardapi.exceptions.BadRequestException;
 import com.example.creditcardapi.exceptions.DataNotFoundException;
 import com.example.creditcardapi.mapper.CardDetailsMapper;
+import com.example.creditcardapi.model.CardAdditionAcknowledgement;
 import com.example.creditcardapi.model.CardDetails;
 import com.example.creditcardapi.model.CardDetailsWithPagination;
 import com.example.creditcardapi.model.PaginationParams;
 import com.example.creditcardapi.repository.CardDetailsRepository;
+import com.example.creditcardapi.util.Constants;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,15 +20,28 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * CardDetailsServiceImpl to hold Business logic for controller method calls
+ */
+
 @Service
 @AllArgsConstructor
+@Slf4j
 public class CardDetailsServiceImpl implements CardDetailsService {
 
     private final CardDetailsRepository cardDetailsRepository;
     private final CardDetailsMapper cardDetailsMapper;
 
+    /**
+     * getCardDetails method to fetch list view of available card data along with pagination info
+     * @param page
+     * @param limit
+     * @return
+     */
     @Override
     public CardDetailsWithPagination getCardDetails(String page, Integer limit) {
+
+        log.info("Inside service getCardDetails method");
 
         CardDetails cardDetails;
         Page<CardDetail> cardDetailPage = cardDetailsRepository
@@ -48,19 +64,26 @@ public class CardDetailsServiceImpl implements CardDetailsService {
         PaginationParams pagination = new PaginationParams();
         pagination.setFirstPage("1");
         pagination.setCurrentPage(page);
-        pagination.setNextPage(cardDetailPage.isLast() ? String.valueOf(Integer.parseInt(page)+1) : null);
-        pagination.setLastPage(String.valueOf(cardDetailPage.getTotalPages()));
+        pagination.setNextPage(cardDetailPage.isLast() ? String.valueOf(Integer.parseInt(page)) : null);
+        pagination.setTotalNoOfRecords(String.valueOf(cardDetailPage.getTotalElements()));
         return pagination;
     }
 
+    /**
+     * addCardDetails method to save new card details to database
+     * @param cardDetailData
+     */
 
     @Override
-    public void addCardDetails(com.example.creditcardapi.model.CardDetail cardDetailData) {
+    public CardAdditionAcknowledgement addCardDetails(com.example.creditcardapi.model.CardDetail cardDetailData) {
        Boolean isValid = validate(cardDetailData.getCardNumber());
-       if(isValid)
-         cardDetailsRepository.save(cardDetailsMapper.mapCardDataToBE(cardDetailData));
+       log.info("Luhn validation of card number is "+isValid);
+       if(isValid){
+           CardDetail cardDetailBE = cardDetailsRepository.save(cardDetailsMapper.mapCardDataToBE(cardDetailData));
+           return CardAdditionAcknowledgement.builder().cardCreationId(cardDetailBE.getId()).build();
+       }
        else
-           throw new BadRequestException("Bad Request Invalid Card No.");
+           throw new BadRequestException(Constants.CARD_NUMBER_INVALID_MESSAGE);
     }
 
     private Boolean validate(String cardNumber) {
@@ -80,6 +103,6 @@ public class CardDetailsServiceImpl implements CardDetailsService {
                     i.getAndIncrement();
                 });
 
-        return calculatedSum.get() %10 == 0 ?true : false;
+        return calculatedSum.get() %10 == 0;
     }
 }

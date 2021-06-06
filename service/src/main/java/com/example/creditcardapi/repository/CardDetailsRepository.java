@@ -8,7 +8,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Repository to do operatios on CardDetail Database
+ * Repository to do operations on CardDetail Database
  */
 @Repository
 public interface CardDetailsRepository extends CrudRepository<CardDetail,String>, PagingAndSortingRepository <CardDetail,String>{

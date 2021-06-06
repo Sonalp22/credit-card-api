@@ -49,7 +49,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CardDetail'
+              $ref: '#/components/schemas/CardAdditionAcknowledgement'
       responses:
         '201':
           description: Created
@@ -133,8 +133,8 @@ paths:
               $ref: '#/components/headers/CurrentPage'
             Next-Page:
               $ref: '#/components/headers/NextPage'
-            Last-Page:
-              $ref: '#/components/headers/LastPage'
+            Total-Records:
+              $ref: '#/components/headers/TotalRecords'
         '400':
           description: Bad Request.
           content:
@@ -197,9 +197,9 @@ components:
         type: string
         example: 16
       required: false
-    LastPage:
+    TotalRecords:
       description: |
-        Page reference representing the last page of data in the data set
+        Total No of Records
       schema:
         type: string
         example: 25
@@ -282,6 +282,12 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CardDetail'
+
+    CardAdditionAcknowledgement:
+      properties:
+        cardCreationId:
+          type: string
+          description: Unique identifier of the new card created id
 
   securitySchemes:
     Oauth2User:

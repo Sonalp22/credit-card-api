@@ -1,14 +1,19 @@
 package com.example.creditcardapi.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * PaginationParams
+ */
 @Data
-@Getter
-@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class PaginationParams {
 
     @NotNull
@@ -22,6 +27,6 @@ public class PaginationParams {
     private String nextPage;
 
     @NotNull
-    private String lastPage;
+    private String totalNoOfRecords;
 
 }
