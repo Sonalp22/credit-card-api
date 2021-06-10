@@ -86,6 +86,11 @@ public class CardDetailsServiceImpl implements CardDetailsService {
            throw new BadRequestException(Constants.CARD_NUMBER_INVALID_MESSAGE);
     }
 
+    /**
+     * Luhn 10 logic to validate card numbers
+     * @param cardNumber
+     * @return Boolean
+     */
     private Boolean validate(String cardNumber) {
         String reverseCardNo = StringUtils.reverse(cardNumber);
         AtomicInteger calculatedSum = new AtomicInteger();
