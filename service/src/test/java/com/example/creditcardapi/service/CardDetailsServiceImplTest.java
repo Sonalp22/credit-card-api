@@ -73,7 +73,9 @@ class CardDetailsServiceImplTest {
                .builder()
                .customerName("Cust1").cardNumber("83764091801224").limit("£737")
                .build();
-        Assertions.assertThrows(BadRequestException.class, () -> cardDetailsService.addCardDetails(cardDetailModelData));
+        BadRequestException badRequest = Assertions.assertThrows(BadRequestException.class, () -> cardDetailsService.addCardDetails(cardDetailModelData));
+        Assertions.assertEquals("Bad Request Invalid Card No.",badRequest.getMessage());
+
 
     }
 

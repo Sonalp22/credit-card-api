@@ -74,7 +74,9 @@ class CardDetailsControllerTest {
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(getCardData(cardNumber))
                     .accept(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isBadRequest());
+                    .andExpect(status().isBadRequest())
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("BAD_REQUEST"))
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.subErrors[0].message").value("Card Number must be between 16 to 19 digits only"));
         }
 
         @Test
